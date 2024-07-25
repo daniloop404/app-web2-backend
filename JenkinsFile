@@ -1,0 +1,31 @@
+node {
+    def mvnHome = "C:\\Program Files\\Apache\\maven"
+    def mvnCmd = "\"${mvnHome}\\bin\\mvn.cmd\""
+    
+    stage('Diagnóstico') {
+        bat 'echo %PATH%'
+        bat "if exist \"${mvnHome}\\bin\\mvn.cmd\" (echo Maven encontrado) else (echo Maven no encontrado)"
+        bat "${mvnCmd} -version"
+    }
+    
+    stage('Inicio') {
+        git url: 'https://github.com/daniloop404/app-web2-backend.git'
+    }
+
+    stage('Instalación de dependencias') {
+        bat "${mvnCmd} clean install"
+    }
+
+    stage('Construcción') {
+        bat "${mvnCmd} package"
+    }
+    node {
+    stage('Clonar repositorio phyton'){
+        git 'https://github.com/daniloop404/python-test.git'
+    }
+    
+    stage('Ejecucion phyton'){
+        bat 'main.py'
+    }
+}
+}
