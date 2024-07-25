@@ -3,26 +3,20 @@ node {
     def mvnCmd = "\"${mvnHome}\\bin\\mvn.cmd\""
 
     stage('Clonación del repositorio') {
-        git url: 'https://github.com/daniloop404/app-web2-backend.git'
+        // El código de clonación del repositorio ya está manejado por Jenkins debido a la configuración en la interfaz gráfica
+        // Este stage puede quedar vacío o utilizarse para fines de diagnóstico si es necesario
     }
 
     stage('Diagnóstico') {
-        dir('app-web2-backend') {
-            bat 'echo Current directory: %cd%'
-            bat 'dir'
-            bat 'type pom.xml'
-        }
+        bat 'echo Current directory: %cd%'
+        bat 'dir'
     }
 
     stage('Instalación de dependencias') {
-        dir('app-web2-backend') {
-            bat "${mvnCmd} clean install"
-        }
+        bat "${mvnCmd} clean install"
     }
 
     stage('Construcción') {
-        dir('app-web2-backend') {
-            bat "${mvnCmd} package"
-        }
+        bat "${mvnCmd} package"
     }
 }
