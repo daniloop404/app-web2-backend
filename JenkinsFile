@@ -2,11 +2,19 @@ node {
     def mvnHome = "C:\\Program Files\\Apache\\maven"
     def mvnCmd = "\"${mvnHome}\\bin\\mvn.cmd\""
 
+    stage('Clonación del repositorio') {
+        git url: 'https://github.com/daniloop404/app-web2-backend.git'
+    }
+
     stage('Instalación de dependencias') {
-        bat "${mvnCmd} clean install"
+        dir('app-web2-backend') {
+            bat "${mvnCmd} clean install"
+        }
     }
 
     stage('Construcción') {
-        bat "${mvnCmd} package"
+        dir('app-web2-backend') {
+            bat "${mvnCmd} package"
+        }
     }
 }
