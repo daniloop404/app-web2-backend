@@ -9,13 +9,4 @@ node {
     stage('Construcción') {
         bat "${mvnCmd} package"
     }
-    node {
-    stage('Clonar repositorio phyton'){
-        git 'https://github.com/daniloop404/python-test.git'
-    }
-    
-    stage('Ejecucion phyton'){
-        bat 'main.py'
-    }
-}
 }
